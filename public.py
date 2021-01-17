@@ -18,27 +18,25 @@ async def on_ready():
 async def help(ctx):
    await ctx.send("custom help can go here")
 
-
-
-
+#find out the servers ping / connection latency to the discord servers
 @client.command()
 async def ping(ctx):
     await ctx.send(f'Pong! {round(client.latency * 1000)} ms')
 
 
-
+# use this command to kick users 
 @client.command(pass_context=True)
 async def kick(ctx, member: discord.Member, *, reason=None):
     await member.kick(reason=reason)
     await ctx.send(f'{member.mention} has been kicked for the following reason: {reason}')
 
-
+#use this to ban members / users
 @client.command(pass_context=True)
 async def ban(ctx, member: discord.Member, *, reason=None):
     await member.ban(reason=reason)
     await ctx.send(f'{member.mention} has been banned for the following reason: {reason}')
 
-
+#use this to unban banned members
 @client.command(pass_context=True)
 async def unban(ctx, *, member):
     banned_users = await ctx.guild.bans()
@@ -49,10 +47,11 @@ async def unban(ctx, *, member):
             await ctx.guild.unban(user)
             await ctx.send(f"unbanned {user.mention}")
 
-
+# ust this to change nicknames of users. In your discord server. 
 @client.command(pass_context=True)
 async def chnick(ctx, member: discord.Member, *, nick):
     await member.edit(nick=nick)
     await ctx.send(f'Nickname was changed for {member.mention} ')
 
 client.run(token)
+
