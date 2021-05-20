@@ -9,8 +9,30 @@ client.remove_command('help')
 @client.event
 async def on_ready():
     print("My body is ready")
-    await client.change_presence(activity=discord.Game(name='Goated 🐐'))
+    await client.change_presence(activity=discord.Game(name='custom status'))
 
+
+
+# welcome message
+@client.event
+async def on_member_join(member):
+       # will do both simple single line msg and embed
+       # singel line welcome message. 
+       welcome_channel = client.get_channel() # put channel id in brackets.
+       await welcome_channel.send(f"Hey {member.mention} welcome to server name")    
+       # embed form
+       welcome_em = discord.Embed(title=f"Welcome {member.mention}", description="Add anything u want here", color=0xFF0000) # feel free to change the color to whatever u like i like https://htmlcolorcodes.com/ but make sure to put 0x{hexcode}
+       welcome_em.set_thumbnail(url=member.avatar_url)
+       welcome_channel_for_embed = client.get_channel() # put channel id in brackets.
+       await welcome_channel_for_embed.send(embed=welcome_em)
+
+
+#  give roles to new members
+@client.event
+async def on_member_join(member):
+ # may need to install a module. 
+ role = discord.utils.get(member.server.roles, name="Role name")
+ await member.add_roles(role)
 
 #help command option 1 // below 
 
@@ -54,4 +76,3 @@ async def chnick(ctx, member: discord.Member, *, nick):
     await ctx.send(f'Nickname was changed for {member.mention} ')
 
 client.run(token)
-
